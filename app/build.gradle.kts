@@ -75,6 +75,7 @@ dependencies {
     // Glide
     // https://mvnrepository.com/artifact/com.github.bumptech.glide/glide
     implementation("com.github.bumptech.glide:glide:4.15.0")
+    implementation ("com.github.bumptech.glide:compose:1.0.0-beta01")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.0")
     
     testImplementation("junit:junit:4.13.2")
