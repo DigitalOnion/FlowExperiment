@@ -91,7 +91,7 @@ fun welcome(pictureList: SnapshotStateList<PictureItem>, modifier: Modifier = Mo
                         .padding(4.dp)
                         .padding(top = 4.dp)
                         .clip(RoundedCornerShape(16.dp))
-                        .aspectRatio(16f / 9f)
+                       // .aspectRatio(16f / 9f)
                 )
             }
         }

@@ -32,7 +32,7 @@ interface PixabayApiService {
     suspend fun getPictures(
         @Query("key") apiKey: String = API_KEY,
         @Query("page") page: Int = 1,
-        @Query("per-page") perPage: Int = 3,
+        @Query("per_page") perPage: Int = 3,
         @Query("image_type") type: String = "photo",
         @Query("q") q: String = "ganesh"
     ) : Response

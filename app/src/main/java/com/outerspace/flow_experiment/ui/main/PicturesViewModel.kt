@@ -19,8 +19,8 @@ class PicturesViewModel: ViewModel() {
         picturesState.addAll(list)
     }
 
-    suspend fun collectPictures(subject: String, page: Int, count: Int) {
-        PictureApi.getPictureFlow(subject, page, count)
+    suspend fun collectPictures(subject: String, page: Int, perPage: Int) {
+        PictureApi.getPictureFlow(subject, page, perPage)
             .flowOn(Dispatchers.IO)
             .catch {
                 picturesState.clear()
@@ -28,6 +28,8 @@ class PicturesViewModel: ViewModel() {
             .collect { list: List<PictureItem> ->
                 picturesState.clear()
                 picturesState.addAll(list)
+
+
             }
     }
 }
