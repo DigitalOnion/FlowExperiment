@@ -5,16 +5,29 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import com.outerspace.flow_experiment.data.PictureApi
 import com.outerspace.flow_experiment.data.PictureItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
 
 class PicturesViewModel: ViewModel() {
 
     val picturesState: SnapshotStateList<PictureItem> = mutableStateListOf()
 
-    suspend fun fetchPictures(count: Int) {
+    suspend fun fetchPictures(subject: String, page: Int, count: Int) {
         picturesState.clear()
-        val list = PictureApi.getPictures(count)
-        for (pictureItem: PictureItem in list) {
-            picturesState.add(pictureItem)
-        }
+        val list: List<PictureItem> = PictureApi.getPictures(subject, page, count)
+        picturesState.addAll(list)
+    }
+
+    suspend fun collectPictures(subject: String, page: Int, count: Int) {
+        PictureApi.getPictureFlow(subject, page, count)
+            .flowOn(Dispatchers.IO)
+            .catch {
+                picturesState.clear()
+            }
+            .collect { list: List<PictureItem> ->
+                picturesState.clear()
+                picturesState.addAll(list)
+            }
     }
 }
