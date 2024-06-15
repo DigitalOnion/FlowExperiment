@@ -64,7 +64,7 @@ fun welcome(pictureList: SnapshotStateList<PictureItem>, modifier: Modifier = Mo
           }
       }*/
 
-    //Adding all images from urls to GlideImage
+    //Adding all images from urls to GlideImage and added customizations to image
     Scaffold(
         topBar = {
             TopAppBar(
