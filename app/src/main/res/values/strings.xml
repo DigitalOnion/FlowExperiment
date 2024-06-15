@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Flow-Experiment</string>
+
+    <string name="refresh_button_face">Refresh</string>
 </resources>
