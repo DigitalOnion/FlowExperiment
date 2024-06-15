@@ -1,44 +1,30 @@
 package com.outerspace.flow_experiment.data
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Query
-import kotlin.streams.toList
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
-const val BASE_URL = "https://pixabay.com"
-const val API_KEY = "8782397-0167754e846f520e8c572b2ab"
-private val moshi = Moshi.Builder()
-    .add(KotlinJsonAdapterFactory())
-    .build()
+interface PictureApiInterface {
+    suspend fun getPictures(subject: String, page: Int, perPage: Int): List<PictureItem>
 
-private val retrofit = Retrofit.Builder()
-    .baseUrl(BASE_URL)
-    .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .build()
-
-private interface PixabayApiService {
-    @GET("/api")
-    suspend fun getPictures(
-        @Query("per-page") perPage: Int,
-        @Query("page") page: Int = 1,
-        @Query("image_type") type: String = "photo",
-        @Query("key") apiKey: String = API_KEY) : Response
+    fun getPictureFlow(subject: String, page: Int, perPage: Int): Flow<List<PictureItem>>
 }
 
-private object PixabayApi {
-    val retrofitService: PixabayApiService by lazy { retrofit.create(PixabayApiService::class.java)}
-}
+object PictureApi: PictureApiInterface  {
+    override suspend fun getPictures(subject: String, page: Int, perPage: Int): List<PictureItem> {
+        val response = pixabayApiService.getPictures(q = subject, page = page, perPage = perPage)
+        val pictureList:List<PictureItem> = response.hits?.map {
+            PictureItem(type = it.type?: "", tags = it.tags?: "", url = it.previewURL?: "")
+        } ?: emptyList()
+        return pictureList
+    }
 
-object PictureApi {
-    suspend fun getPictures(size: Int = 10): List<PictureItem> {
-        val response = PixabayApi.retrofitService.getPictures(size)
-        val hits = response.hits
-        val hitsStream = hits?.map() {hit ->
-            PictureItem(hit.type?: "", hit.tags?: "", hit.previewURL?: "")
-        }
-        return hitsStream!!.toList()
+    override fun getPictureFlow(
+        subject: String,
+        page: Int,
+        perPage: Int
+    ): Flow<List<PictureItem>> = flow {
+        emit(
+            getPictures(subject, page, perPage)     // the same getPictures embedded in the flow's emit
+        )
     }
 }

@@ -36,7 +36,13 @@ class MainActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
         lifecycleScope.launch {
-            picturesVM.fetchPictures(5)
+            // Note: both solutions are good, fetchPictures is direct; collectPictures uses flows
+
+            // fetch pictures calls the service directly
+//            picturesVM.fetchPictures("Ganesh", 1, 5)
+
+            // collect pictures collects from the flow, which in turn emits the result from the service
+            picturesVM.collectPictures("Ganesh", 1, 5)
         }
     }
 }
