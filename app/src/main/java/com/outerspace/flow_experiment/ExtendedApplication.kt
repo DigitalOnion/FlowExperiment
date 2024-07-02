@@ -1,4 +1,8 @@
 package com.outerspace.flow_experiment
 
-class ExtendedApplication {
-}
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
+import dagger.hilt.android.lifecycle.HiltViewModel
+
+@HiltAndroidApp
+class ExtendedApplication : Application()

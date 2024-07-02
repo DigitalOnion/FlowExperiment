@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.dagger.hilt.android")
+    id ("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -71,12 +73,25 @@ dependencies {
     // moshi converter
     implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
     implementation("com.squareup.moshi:moshi-adapters:1.14.0")
-
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     // Glide
     // https://mvnrepository.com/artifact/com.github.bumptech.glide/glide
     implementation("com.github.bumptech.glide:glide:4.15.0")
     implementation ("com.github.bumptech.glide:compose:1.0.0-beta01")
+    implementation("androidx.room:room-common:2.6.1")
+    implementation("androidx.test:core-ktx:1.6.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.0")
+
+    //Room
+
+    implementation("androidx.room:room-ktx:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+
+    //hilt
+    implementation ("com.google.dagger:hilt-android:2.51.1")
+    kapt ("com.google.dagger:hilt-compiler:2.51.1")
+
+
     
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
