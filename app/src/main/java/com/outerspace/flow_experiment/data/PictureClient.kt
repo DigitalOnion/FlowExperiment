@@ -27,6 +27,7 @@ private val retrofit = Retrofit.Builder()
     .build()
 const val API_KEY = "8782397-0167754e846f520e8c572b2ab"
 
+
 interface PixabayApiService {
 
     // the getPictures function is equivalent to:
@@ -40,6 +41,8 @@ interface PixabayApiService {
         @Query("image_type") type: String = "photo",
         @Query("q") q: String = "ganesh"
     ): Response
+
+
 
 }
 

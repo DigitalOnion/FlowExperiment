@@ -6,13 +6,13 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 
-@Entity(tableName = "picture")
+@Entity(tableName = "pictures")
 data class PictureEntity(
     @PrimaryKey(autoGenerate = true) val id : Long? = null,
 
-    @ColumnInfo(name = "page")val page : Int,
-    @ColumnInfo(name = "per_page") val perpage : Int,
-    @ColumnInfo(name = "q") val subject : String
+    @ColumnInfo(name = "type")val type : String,
+    @ColumnInfo(name = "tags") val tags : String,
+    @ColumnInfo(name = "url") val url : String
 )
 
 

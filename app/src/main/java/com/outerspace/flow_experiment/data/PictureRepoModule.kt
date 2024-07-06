@@ -14,9 +14,12 @@ const val DATABASE_NAME = "picturedatabase"
 object PictureRepoModule {
 
     @Provides
-    fun providePictureDatabase(@ApplicationContext appContext: Context): picturedatabase =
-        Room.databaseBuilder(appContext,picturedatabase::class.java, DATABASE_NAME).build()
+    fun providePictureDatabase(@ApplicationContext appContext: Context): PictureDatabase =
+        Room.databaseBuilder(appContext,PictureDatabase::class.java, DATABASE_NAME)
+            .fallbackToDestructiveMigration()
+            .build()
 
     @Provides
-    fun providepicturedao(db:picturedatabase)=db.picturedao()
+    fun providepicturedao(db:PictureDatabase)=db.pictureDao()
+
 }

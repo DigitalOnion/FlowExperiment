@@ -18,6 +18,7 @@ object PictureApi: PictureApiInterface  {
         return pictureList
     }
 
+
     override fun getPictureFlow(
         subject: String,
         page: Int,
